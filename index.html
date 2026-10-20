@@ -1,6 +1,356 @@
 <!DOCTYPE html>
-<html>
-  <body>
-    <h1>Hola me llamo hugo</h1>
-  </body>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sacromonte Bikes · Rutas en bici eléctrica por Granada</title>
+<meta name="description" content="Alquiler de bicicletas eléctricas y rutas guiadas por el Albaicín, el Sacromonte y la Vega. Empresa ficticia creada como proyecto.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=DM+Sans:wght@400;500;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+<style>
+:root{--serif:"Playfair Display",Georgia,"Times New Roman",serif;--sans:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;--hand:"Caveat","Segoe Script","Comic Sans MS",cursive;--g:#8a1c3f;--g2:#5d1230;--a:#1f6f8b;--a2:#14495c;--oro:#e0a526;--cal:#fdfcfa;--t:#1f1a1d;--s:#eaf2f5;--r:14px}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;font:1.05rem/1.65 var(--sans);color:var(--t);background:var(--cal)}
+h1,h2,h3{font-family:var(--serif);line-height:1.15;margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--oro);outline-offset:2px}
+.wrap{max-width:68rem;margin:0 auto;padding:0 5vw}
+/* cabecera */
+header{position:sticky;top:0;z-index:20;background:rgba(253,252,250,.94);backdrop-filter:blur(8px);border-bottom:3px solid var(--a)}
+header .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font:900 1.4rem var(--serif);color:var(--g);text-decoration:none}
+nav{display:flex;gap:1.4rem}
+nav a{text-decoration:none;font-weight:600;padding:.3rem 0;border-bottom:2px solid transparent}
+nav a:hover,nav a.on{color:var(--a);border-color:var(--a)}
+#burger{display:none;background:none;border:2px solid var(--g);color:var(--g);border-radius:8px;font-size:1.3rem;padding:.2rem .6rem;cursor:pointer}
+@media(max-width:720px){#burger{display:block}nav{display:none;position:absolute;top:64px;left:0;right:0;flex-direction:column;background:var(--cal);padding:1rem 5vw;border-bottom:3px solid var(--a)}nav.open{display:flex}}
+/* hero interactivo */
+.hero{position:relative;color:#fff;padding:9vh 0 7vh;background:var(--sky,linear-gradient(#f6c36b,#e98a4b));transition:background .6s;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;opacity:.13;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80'%3E%3Cpath d='M40 4l9 22 22-9-9 22 22 9-22 9 9 22-22-9-9 22-9-22-22 9 9-22-22-9 22-9-9-22 22 9z' fill='none' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E")}
+.hero .wrap{position:relative}
+.hero h1{font-size:clamp(2.4rem,7vw,4.8rem);max-width:14ch;text-shadow:0 2px 18px rgba(0,0,0,.25)}
+.hero p{max-width:38rem;font-size:1.2rem;text-shadow:0 1px 8px rgba(0,0,0,.3)}
+.hora{background:rgba(0,0,0,.28);border-radius:var(--r);padding:1rem 1.3rem;max-width:34rem;margin-top:1.5rem}
+.hora label{display:flex;justify-content:space-between;font-weight:700}
+.hora input{width:100%;accent-color:var(--oro);margin:.6rem 0}
+#sug{margin:0;font-size:1rem}
+.btn{display:inline-block;background:var(--g);color:#fff;border:0;border-radius:10px;padding:.8rem 1.6rem;font:inherit;font-weight:700;text-decoration:none;cursor:pointer;transition:transform .15s,background .15s}
+.btn:hover{background:var(--g2);transform:translateY(-2px)}
+.btn.oro{background:var(--oro);color:#2a1d00}.btn.oro:hover{background:#f0b838}
+/* secciones */
+section{padding:4.5rem 0}
+.alt{background:var(--s)}
+h2{font-size:clamp(1.8rem,4vw,2.5rem);color:var(--a2);margin-bottom:.5rem}
+.sub{max-width:40rem;margin:0 0 2rem}
+/* rutas */
+.tabs{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.tab{border:2px solid var(--a);background:#fff;color:var(--a2);border-radius:999px;padding:.5rem 1.2rem;font:inherit;font-weight:700;cursor:pointer}
+.tab[aria-selected=true]{background:var(--a);color:#fff}
+.panel{display:grid;grid-template-columns:1.2fr 1fr;gap:2rem;background:#fff;border-radius:var(--r);box-shadow:0 8px 30px rgba(20,73,92,.12);overflow:hidden}
+.panel .art{min-height:15rem;display:flex;align-items:flex-end;padding:1.5rem;color:#fff;background:var(--fondo)}
+.panel .art h3{font-size:1.8rem;text-shadow:0 2px 10px rgba(0,0,0,.4)}
+.panel .info{padding:1.5rem 1.5rem 1.5rem 0}
+.datos{display:flex;gap:1.5rem;flex-wrap:wrap;margin:1rem 0;font-weight:700;color:var(--a2)}
+.nivel{display:flex;gap:4px;align-items:center}
+.nivel i{width:22px;height:8px;border-radius:4px;background:#cfdde3}.nivel i.on{background:var(--g)}
+@media(max-width:760px){.panel{grid-template-columns:1fr}.panel .info{padding:0 1.5rem 1.5rem}}
+/* calculadora */
+.calc{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:start}
+@media(max-width:760px){.calc{grid-template-columns:1fr}}
+label.f{display:grid;gap:.3rem;font-weight:700;margin-bottom:1rem}
+input,select{font:inherit;padding:.65rem .8rem;border:2px solid #aac3cc;border-radius:10px;background:#fff;width:100%}
+.chk{display:flex;gap:.6rem;align-items:center;margin:.4rem 0}.chk input{width:auto}
+.total{background:var(--g);color:#fff;border-radius:var(--r);padding:1.6rem}
+.total .n{font:900 3.4rem var(--serif)}
+.total ul{padding-left:1.2rem;margin:.5rem 0 0;font-size:.98rem}
+/* faq */
+details{background:#fff;border-radius:12px;margin-bottom:.7rem;border:1px solid #cfdde3}
+summary{cursor:pointer;font-weight:700;padding:1rem 1.2rem}
+details p{margin:0;padding:0 1.2rem 1rem}
+details[open] summary{color:var(--g)}
+/* reserva */
+.res{display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+@media(max-width:760px){.res{grid-template-columns:1fr}}
+.err{color:var(--g);font-weight:700;min-height:1.5rem;margin:.5rem 0}
+.card{background:#fff;border-left:6px solid var(--oro);border-radius:10px;padding:.9rem 1.1rem;margin-bottom:.8rem;display:flex;justify-content:space-between;gap:1rem;align-items:center;box-shadow:0 3px 12px rgba(0,0,0,.08)}
+.card button{background:none;border:0;color:var(--g);font-weight:700;cursor:pointer;font:inherit}
+.vacio{color:#5b6a70}
+footer{background:var(--t);color:#d8d3d6;padding:2rem 0;font-size:.95rem}
+#toast{position:fixed;bottom:20px;left:50%;transform:translate(-50%,120px);background:var(--a2);color:#fff;padding:.9rem 1.4rem;border-radius:10px;font-weight:700;transition:transform .35s;z-index:30}
+#toast.show{transform:translate(-50%,0)}
+
+/* extras */
+.hand{font-family:var(--hand);font-size:1.9rem;color:var(--oro);display:inline-block;transform:rotate(-4deg);margin-left:.6rem;text-shadow:0 1px 6px rgba(0,0,0,.4)}
+.hero h1{font-weight:900;font-style:italic}
+.sky{position:absolute;left:0;right:0;bottom:0;line-height:0;pointer-events:none}
+.sky svg{width:100%;height:clamp(60px,12vw,130px);display:block}
+.bici{position:absolute;bottom:6px;left:0;width:78px;animation:ruedaX 16s linear infinite}
+.bici .w{transform-box:fill-box;transform-origin:center;animation:gira .7s linear infinite}
+@keyframes ruedaX{from{transform:translateX(-100px)}to{transform:translateX(calc(100vw + 100px))}}
+@keyframes gira{to{transform:rotate(360deg)}}
+.hero{padding-bottom:calc(7vh + 90px)}
+.marq{background:var(--oro);color:#2a1d00;overflow:hidden;white-space:nowrap;font:italic 700 1.3rem var(--serif);padding:.7rem 0;transform:rotate(-1deg);margin:-14px -10px 0;position:relative;z-index:2;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+.marq div{display:inline-block;animation:marq 26s linear infinite}
+.marq span{margin:0 1.6rem}
+@keyframes marq{to{transform:translateX(-50%)}}
+.cifras{background:linear-gradient(135deg,var(--g),var(--g2));color:#fff;padding:5rem 0 4rem}
+.cifras .g{display:grid;grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));gap:2rem;text-align:center}
+.cifras b{display:block;font:900 3.4rem var(--serif);color:var(--oro)}
+.cifras small{font-size:1rem;opacity:.9}
+.quote{background:#fff;border-radius:var(--r);padding:2rem 2.2rem;box-shadow:0 8px 30px rgba(20,73,92,.12);max-width:46rem;margin:0 auto;text-align:center;transition:opacity .3s}
+.quote p{font:italic 700 1.5rem/1.4 var(--serif);margin:0 0 1rem}
+.quote cite{font-family:var(--hand);font-size:1.6rem;color:var(--g);font-style:normal}
+.puntos{display:flex;gap:.5rem;justify-content:center;margin-top:1rem}
+.puntos button{width:14px;height:14px;border-radius:50%;border:0;background:#b8ccd3;cursor:pointer;padding:0}
+.puntos button[aria-current=true]{background:var(--g);transform:scale(1.3)}
+.tema{background:none;border:2px solid var(--a);color:var(--a2);border-radius:999px;padding:.2rem .7rem;font:inherit;cursor:pointer}
+body.dark{--cal:#17131c;--t:#f2eef0;--s:#1f1a26;--a2:#7cc7df;--a:#4fa8c6}
+body.dark header{background:rgba(23,19,28,.94)}
+body.dark .panel,body.dark details,body.dark .card,body.dark .tab,body.dark input,body.dark select,body.dark .quote{background:#262030;color:var(--t);border-color:#463d52}
+body.dark .tab[aria-selected=true]{background:var(--a);color:#10141a}
+body.dark .logo,body.dark details[open] summary{color:#ff7fa5}
+@media(prefers-reduced-motion:reduce){.bici,.bici .w,.marq div{animation:none!important}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="logo" href="#inicio">Sacromonte Bikes</a>
+    <button id="burger" aria-label="Abrir menú" aria-expanded="false">☰</button>
+    <nav id="menu">
+      <a href="#rutas">Rutas</a><a href="#precio">Calcula tu precio</a><a href="#faq">Dudas</a><a href="#reservas">Reservar</a><button class="tema" id="tema" aria-label="Cambiar tema claro u oscuro">☾</button>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+<div class="hero" id="hero">
+  <div class="wrap">
+    <h1>Las cuestas de Granada, sin sudar.</h1>
+    <p>Bicicletas eléctricas y rutas guiadas por el Albaicín, el Sacromonte y la Vega. Salimos cada día desde Plaza Nueva. <span class="hand">¡alquiler desde 18 €!</span></p>
+    <div class="hora">
+      <label for="hora"><span>¿A qué hora quieres salir?</span><output id="horaOut">19:00</output></label>
+      <input id="hora" type="range" min="9" max="20" step="1" value="19">
+      <p id="sug"></p>
+    </div>
+    <p style="margin-top:1.5rem"><a class="btn oro" href="#reservas">Reservar una ruta</a></p>
+  </div>
+  <div class="sky" aria-hidden="true">
+    <svg viewBox="0 0 1200 120" preserveAspectRatio="none"><path fill="#3a0a22" fill-opacity=".55" d="M0 120V82h60V62h20V82h80V52h30V32h20V52h30V82h120V72h40V52h20V72h40V92h200V62h30V42h20V27h60V42h20V62h30V92h160V72h50V52h20V72h60V87h150V62h40V47h20V62h40V120z"/><path fill="#fdfcfa" d="M0 120V104h1200v16z"/></svg>
+    <svg class="bici" viewBox="0 0 80 50"><g fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"><circle class="w" cx="14" cy="36" r="11" stroke-dasharray="6 3"/><circle class="w" cx="66" cy="36" r="11" stroke-dasharray="6 3"/><path d="M14 36L30 36 40 16 58 16M30 36L42 18M40 16L40 10M66 36L58 16M34 10h10"/></g></svg>
+  </div>
+</div>
+<div class="marq" aria-hidden="true"><div><span>Albaicín</span><span>✦</span><span>Sacromonte</span><span>✦</span><span>Vega</span><span>✦</span><span>Bicis eléctricas</span><span>✦</span><span>Atardeceres con vistas a la Alhambra</span><span>✦</span><span>Albaicín</span><span>✦</span><span>Sacromonte</span><span>✦</span><span>Vega</span><span>✦</span><span>Bicis eléctricas</span><span>✦</span><span>Atardeceres con vistas a la Alhambra</span><span>✦</span></div></div>
+
+<section class="cifras" aria-label="Sacromonte Bikes en cifras"><div class="wrap g">
+<div><b data-n="2500" data-s="+">0</b><small>ciclistas felices</small></div>
+<div><b data-n="12">0</b><small>miradores en las rutas</small></div>
+<div><b data-n="4.9" data-d="1">0</b><small>valoración media</small></div>
+<div><b data-n="3">0</b><small>rutas guiadas</small></div>
+</div></section>
+
+<section id="rutas">
+  <div class="wrap">
+    <h2>Elige tu ruta</h2>
+    <p class="sub">Pulsa en cada ruta para ver los detalles.</p>
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div class="panel" id="panel" role="tabpanel"></div>
+  </div>
+</section>
+
+<section id="precio" class="alt">
+  <div class="wrap">
+    <h2>Calcula tu precio</h2>
+    <p class="sub">Cambia las opciones y el precio se actualiza solo. Desde 4 personas, 10 % de descuento.</p>
+    <div class="calc">
+      <div>
+        <label class="f">Servicio
+          <select id="serv"></select>
+        </label>
+        <label class="f">Personas: <span id="pN">2</span>
+          <input id="pers" type="range" min="1" max="10" value="2">
+        </label>
+        <div class="chk"><input type="checkbox" id="foto"><label for="foto">Pack de fotos (10 € por grupo)</label></div>
+        <div class="chk"><input type="checkbox" id="tapa"><label for="tapa">Parada de tapas (12 € por persona)</label></div>
+      </div>
+      <div class="total" aria-live="polite">
+        <div>Total estimado</div>
+        <div class="n" id="tot">0 €</div>
+        <ul id="desg"></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="opiniones">
+  <div class="wrap">
+    <h2 style="text-align:center">Lo que dicen de nosotros</h2>
+    <p class="sub" style="margin:0 auto 2rem;text-align:center">Opiniones inventadas, como la empresa.</p>
+    <div class="quote" id="quote" aria-live="polite"></div>
+    <div class="puntos" id="puntos"></div>
+  </div>
+</section>
+
+<section id="faq" class="alt">
+  <div class="wrap">
+    <h2>Preguntas frecuentes</h2>
+    <p class="sub">Lo que más nos preguntan antes de salir.</p>
+    <details><summary>¿Necesito experiencia en bici?</summary><p>No. Las bicis eléctricas suben las cuestas por ti y antes de salir hacemos una prueba de 10 minutos.</p></details>
+    <details><summary>¿Qué pasa si llueve?</summary><p>Si hay lluvia fuerte, cambiamos tu reserva de día sin coste o te devolvemos el importe.</p></details>
+    <details><summary>¿Está incluido el casco?</summary><p>Sí. Casco, candado y bolsa para el móvil están incluidos en todos los servicios.</p></details>
+    <details><summary>¿Se puede ir con niños?</summary><p>Desde 12 años en la ruta del Albaicín. Para menores, sillas infantiles bajo petición.</p></details>
+  </div>
+</section>
+
+<section id="reservas">
+  <div class="wrap">
+    <h2>Reservar</h2>
+    <p class="sub">Rellena el formulario y verás tu reserva al instante.</p>
+    <div class="res">
+      <form id="form" novalidate>
+        <label class="f">Nombre <input name="nombre" autocomplete="name"></label>
+        <label class="f">Correo <input name="correo" type="email" autocomplete="email"></label>
+        <label class="f">Ruta <select name="ruta" id="rutaSel"></select></label>
+        <label class="f">Día <input name="dia" type="date" id="dia"></label>
+        <label class="f">Personas <input name="personas" type="number" min="1" max="10" value="2"></label>
+        <p class="err" id="err" role="alert"></p>
+        <button class="btn" type="submit">Enviar reserva</button>
+      </form>
+      <div>
+        <h3 style="margin-bottom:1rem">Tus reservas</h3>
+        <div id="lista"></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap"><p>Sacromonte Bikes · Plaza Nueva, 5, 18010 Granada · 958 000 000 · hola@sacromontebikes.example<br>Empresa <strong>inventada</strong> para un proyecto de clase. Todos los datos son ficticios.</p></div>
+</footer>
+<div id="toast" role="status"></div>
+
+<script>
+const RUTAS = [
+  {id:'Albaicín al atardecer', precio:29, h:'2 h', km:12, nivel:1, desc:'Miradores, callejones y el momento en que la Alhambra se vuelve dorada. Paramos en el Mirador de San Nicolás.', inc:'Guía, casco, agua', fondo:'linear-gradient(160deg,#e98a4b,#8a1c3f)'},
+  {id:'Sacromonte y cuevas', precio:39, h:'3 h', km:15, nivel:2, desc:'Subimos al barrio gitano, visitamos una cueva-museo y bajamos por la Carrera del Darro.', inc:'Guía, entrada a la cueva, casco', fondo:'linear-gradient(160deg,#1f6f8b,#3b2a55)'},
+  {id:'Vega y Sierra Nevada', precio:55, h:'4 h', km:35, nivel:3, desc:'Salida de medio día por la Vega con vistas a Sierra Nevada y paradas para tapas.', inc:'Guía, tapas, casco, agua', fondo:'linear-gradient(160deg,#4f9a5b,#14495c)'}
+];
+const SERV = [...RUTAS.map(r=>({n:r.id,p:r.precio,guia:true})),
+  {n:'Alquiler 2 horas (sin guía)',p:18},{n:'Alquiler día completo (sin guía)',p:35}];
+const $ = s => document.querySelector(s);
+const eur = n => n.toFixed(2).replace('.00','').replace('.',',') + ' €';
+
+/* menú móvil */
+$('#burger').onclick = () => { const o = $('#menu').classList.toggle('open'); $('#burger').setAttribute('aria-expanded', o); };
+$('#menu').onclick = e => { if (e.target.tagName==='A') $('#menu').classList.remove('open'); };
+
+/* hero: hora del día */
+const CIELOS = [
+  [9, 'linear-gradient(#8fd3f4,#4aa3c9)', 'Mañana tranquila: buena luz para fotos y menos gente. Te encajan Sacromonte y cuevas o Vega y Sierra Nevada.'],
+  [13,'linear-gradient(#ffd46b,#f59b3d)', 'Mediodía con calor. Mejor la ruta de la Vega, con tapas y sombra por el camino.'],
+  [17,'linear-gradient(#f6a65a,#c4476a)', 'Tarde suave. Una buena hora para Sacromonte y cuevas.'],
+  [19,'linear-gradient(#e98a4b,#5d1230)', 'Hora dorada: la ruta Albaicín al atardecer sale ahora.']
+];
+function cielo(){
+  const h = +$('#hora').value;
+  let c = CIELOS[0]; CIELOS.forEach(x => { if (h >= x[0]) c = x; });
+  $('#hero').style.setProperty('--sky', c[1]);
+  $('#horaOut').textContent = String(h).padStart(2,'0') + ':00';
+  $('#sug').textContent = c[2];
+}
+$('#hora').oninput = cielo; cielo();
+
+/* rutas con pestañas */
+function ruta(i){
+  const r = RUTAS[i];
+  document.querySelectorAll('.tab').forEach((t,j)=>t.setAttribute('aria-selected', i===j));
+  $('#panel').innerHTML = `<div class="art" style="--fondo:${r.fondo}"><h3>${r.id}</h3></div>
+  <div class="info"><p>${r.desc}</p>
+  <div class="datos"><span>${r.h}</span><span>${r.km} km</span><span>${eur(r.precio)} por persona</span></div>
+  <div class="nivel" aria-label="Dificultad ${r.nivel} de 3"><span style="margin-right:.5rem;font-weight:700">Dificultad</span>${[1,2,3].map(n=>`<i class="${n<=r.nivel?'on':''}"></i>`).join('')}</div>
+  <p><strong>Incluye:</strong> ${r.inc}</p>
+  <button class="btn" onclick="elegir(${i})">Reservar esta ruta</button></div>`;
+}
+RUTAS.forEach((r,i)=>{ const b=document.createElement('button'); b.className='tab'; b.role='tab'; b.textContent=r.id; b.onclick=()=>ruta(i); $('#tabs').appendChild(b); });
+function elegir(i){ $('#rutaSel').value = RUTAS[i].id; location.hash = '#reservas'; }
+ruta(0);
+
+/* calculadora */
+SERV.forEach((s,i)=>{ const o=document.createElement('option'); o.value=i; o.textContent=`${s.n} · ${eur(s.p)}`; $('#serv').appendChild(o); });
+function calcular(){
+  const s = SERV[$('#serv').value], n = +$('#pers').value;
+  $('#pN').textContent = n;
+  let base = s.guia ? s.p*n : s.p*n, extra = 0, l = [`${s.n}: ${n} × ${eur(s.p)} = ${eur(base)}`];
+  if ($('#foto').checked){ extra += 10; l.push('Pack de fotos: 10 €'); }
+  if ($('#tapa').checked){ extra += 12*n; l.push(`Tapas: ${n} × 12 € = ${eur(12*n)}`); }
+  let t = base + extra;
+  if (n >= 4){ const d = t*0.1; t -= d; l.push(`Descuento de grupo: −${eur(d)}`); }
+  $('#tot').textContent = eur(t);
+  $('#desg').innerHTML = l.map(x=>`<li>${x}</li>`).join('');
+}
+['serv','pers','foto','tapa'].forEach(id => $('#'+id).addEventListener('input', calcular)); calcular();
+
+/* reservas */
+[...RUTAS.map(r=>r.id),'Solo alquiler de bici'].forEach(n=>{ const o=document.createElement('option'); o.textContent=n; $('#rutaSel').appendChild(o); });
+const hoy = new Date().toISOString().slice(0,10); $('#dia').min = hoy;
+const KEY = 'sacromonte-reservas-v2';
+const cargar = () => { try { return JSON.parse(localStorage.getItem(KEY)) || []; } catch(e){ return []; } };
+const guardar = r => { try { localStorage.setItem(KEY, JSON.stringify(r)); } catch(e){} };
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function pintar(){
+  const r = cargar();
+  $('#lista').innerHTML = r.length ? r.map((x,i)=>`<div class="card"><div><strong>${esc(x.ruta)}</strong><br>${x.dia} · ${x.personas} persona(s) · ${esc(x.nombre)}</div><button onclick="borrar(${i})">Cancelar</button></div>`).join('')
+    : '<p class="vacio">Aún no tienes reservas. Rellena el formulario para crear la primera.</p>';
+}
+function borrar(i){ const r = cargar(); r.splice(i,1); guardar(r); pintar(); aviso('Reserva cancelada'); }
+function aviso(t){ const e=$('#toast'); e.textContent=t; e.classList.add('show'); setTimeout(()=>e.classList.remove('show'),2600); }
+$('#form').addEventListener('submit', e => {
+  e.preventDefault();
+  const d = Object.fromEntries(new FormData(e.target));
+  const err = m => { $('#err').textContent = m; };
+  if (!d.nombre.trim()) return err('Escribe tu nombre.');
+  if (!/^\S+@\S+\.\S+$/.test(d.correo)) return err('Escribe un correo válido.');
+  if (!d.dia || d.dia < hoy) return err('Elige un día a partir de hoy.');
+  if (d.personas < 1 || d.personas > 10) return err('Pueden ir entre 1 y 10 personas.');
+  err('');
+  const r = cargar(); r.push(d); guardar(r);
+  e.target.reset(); pintar(); aviso('Reserva enviada. Te escribiremos a ' + d.correo);
+});
+pintar();
+
+/* contadores */
+const io = new IntersectionObserver(es => es.forEach(en => {
+  if (!en.isIntersecting) return; io.unobserve(en.target);
+  const el = en.target, fin = +el.dataset.n, d = +(el.dataset.d||0), s = el.dataset.s||'', t0 = performance.now();
+  (function paso(t){ const k = Math.min((t-t0)/1400,1), v = fin*(1-Math.pow(1-k,3));
+    el.textContent = v.toFixed(d).replace('.',',') + s; if (k<1) requestAnimationFrame(paso); })(t0);
+}), {threshold:.6});
+document.querySelectorAll('[data-n]').forEach(e => io.observe(e));
+
+/* opiniones */
+const OP = [
+  ['La ruta del atardecer fue lo mejor de nuestro viaje. Subimos el Albaicín sin esfuerzo.','Marta, Valencia'],
+  ['Las cuevas del Sacromonte con guía y bici eléctrica: plan perfecto para una tarde.','Jonas, Berlín'],
+  ['Fuimos 5 amigos, el descuento de grupo y las tapas de la Vega fueron un acierto.','Álvaro, Sevilla']
+];
+let oi = 0, timer;
+function opinion(i){
+  oi = i; const q = $('#quote'); q.style.opacity = 0;
+  setTimeout(()=>{ q.innerHTML = `<p>«${OP[i][0]}»</p><cite>${OP[i][1]}</cite>`; q.style.opacity = 1; }, 250);
+  document.querySelectorAll('#puntos button').forEach((b,j)=>b.setAttribute('aria-current', j===i));
+}
+OP.forEach((_,i)=>{ const b=document.createElement('button'); b.setAttribute('aria-label','Opinión '+(i+1)); b.onclick=()=>{opinion(i);auto();}; $('#puntos').appendChild(b); });
+function auto(){ clearInterval(timer); timer = setInterval(()=>opinion((oi+1)%OP.length), 5500); }
+opinion(0); auto();
+
+/* tema oscuro */
+function tema(o){ document.body.classList.toggle('dark', o); $('#tema').textContent = o ? '☀' : '☾'; try{localStorage.setItem('sb-tema', o?'1':'0');}catch(e){} }
+$('#tema').onclick = () => tema(!document.body.classList.contains('dark'));
+try{ if (localStorage.getItem('sb-tema')==='1') tema(true); }catch(e){}
+</script>
+</body>
 </html>
+
